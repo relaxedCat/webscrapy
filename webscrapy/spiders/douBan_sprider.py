@@ -1,12 +1,9 @@
 import re
 import scrapy
 from bs4 import BeautifulSoup
-from scrapy.http import Request
-from bs4 import BeautifulSoup
 from webscrapy.items import WebscrapyItem
-from webscrapy.settings import INDEX
 
-
+INDEX=0
 class DouBanSprider(scrapy.Spider):
     name = 'douBanSprider'
     allowed_domains = ['movie.douban.com/']
@@ -14,7 +11,6 @@ class DouBanSprider(scrapy.Spider):
 
     def parse(self,response):
         bs4_html = BeautifulSoup(response.text,'lxml')
-        class_info = bs4_html.find_all(class_='item')
         global INDEX
         for child in bs4_html.find(class_='grid_view').find_all('li'):
             item = WebscrapyItem()
