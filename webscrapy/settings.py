@@ -66,8 +66,8 @@ COOKIES_ENABLED = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'webscrapy.pipelines.RedisPipeline': 2,
-   'webscrapy.pipelines.CsvPipeline': 1,
+   'webscrapy.pipelines.RedisPipeline': 1,
+   'webscrapy.pipelines.CsvPipeline': 2,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

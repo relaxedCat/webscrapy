@@ -34,7 +34,6 @@ class DouBanSprider(scrapy.Spider):
             item['star'] = child.find(class_='rating_num').string
             # quote
             if child.find(class_='inq') is not None:
-                print(child.find(class_='inq').string)
                 item['quote'] = child.find(class_='inq').string
             else:
                 item['quote'] = ''

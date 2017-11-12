@@ -15,6 +15,7 @@ class RedisPipeline(object):
         if isinstance(item,WebscrapyItem):
             redisPool.r.hset(item['title'],item['title'],item)
             print(redisPool.r.hget(item['title'],item['title']))
+            return item
         else:
             print('no...')
 
