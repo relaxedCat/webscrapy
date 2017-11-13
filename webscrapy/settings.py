@@ -68,6 +68,7 @@ COOKIES_ENABLED = False
 ITEM_PIPELINES = {
    'webscrapy.pipelines.RedisPipeline': 1,
    'webscrapy.pipelines.CsvPipeline': 2,
+   'webscrapy.pipelines.XiuxiuMoivePipline': 3,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
