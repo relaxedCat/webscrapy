@@ -2,7 +2,7 @@ __author__ = 'xXl'
 from bs4 import BeautifulSoup
 from webscrapy.items import XiuxiuCrapyItem
 import scrapy
-
+import logging
 INDEX= 0
 class XiuxiuMoiveSprider(scrapy.Spider):
 
@@ -40,4 +40,14 @@ class XiuxiuMoiveSprider(scrapy.Spider):
                 item['votes'] = child.find_all('div')[1].find(class_='comment-vote').span.string.strip()
 
             yield item
-        print('https://movie.douban.com/subject/27038183/comments'+bs4_html.find(class_='next')['href'])
+        try:
+            if bs4_html.find(class_='next')['href']:
+                print('https://movie.douban.com/subject/27038183/comments'+bs4_html.find(class_='next')['href'])
+
+                url = 'https://movie.douban.com/subject/27038183/comments'+bs4_html.find(class_='next')['href']
+                yield scrapy.Request(url,callback=self.parse,dont_filter=True)
+            else:
+                pass
+        except Exception as e:
+            logging.error(e)
+
