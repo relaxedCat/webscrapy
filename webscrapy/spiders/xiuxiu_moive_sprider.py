@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from webscrapy.items import XiuxiuCrapyItem
 import scrapy
 import logging
+import time
+import random
 INDEX= 0
 class XiuxiuMoiveSprider(scrapy.Spider):
 
@@ -43,7 +45,7 @@ class XiuxiuMoiveSprider(scrapy.Spider):
         try:
             if bs4_html.find(class_='next')['href']:
                 print('https://movie.douban.com/subject/27038183/comments'+bs4_html.find(class_='next')['href'])
-
+                time.sleep(1 + float(random.randint(1, 100)) / 20)
                 url = 'https://movie.douban.com/subject/27038183/comments'+bs4_html.find(class_='next')['href']
                 yield scrapy.Request(url,callback=self.parse,dont_filter=True)
             else:
