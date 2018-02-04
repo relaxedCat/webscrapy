@@ -5,7 +5,7 @@ import tempfile
 import numpy
 import tensorflow as tf
 from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
-
+import meachinelearning.mnist.constants as const
 mnist = read_data_sets("MNIST_data/", one_hot=True)
 
 x = tf.placeholder(tf.float32,[None, 784]) #图像输入向量
@@ -32,11 +32,12 @@ for i in range(1000):
     #随机抓取训练数据中的100个批处理数据点
     batch_xs, batch_ys = mnist.train.next_batch(100)
     sess.run(train_step, feed_dict={x:batch_xs,y_:batch_ys})
+    if i % const.step_per_test == 0:
+        ''''' 进行模型评估 '''
 
-''''' 进行模型评估 '''
+        #判断预测标签和实际标签是否匹配
+        correct_prediction = tf.equal(tf.argmax(y,1),tf.argmax(y_,1))
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+        #计算所学习到的模型在测试数据集上面的正确率
+        print( sess.run(accuracy, feed_dict={x:mnist.test.images, y_:mnist.test.labels}) )
 
-#判断预测标签和实际标签是否匹配
-correct_prediction = tf.equal(tf.argmax(y,1),tf.argmax(y_,1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
-#计算所学习到的模型在测试数据集上面的正确率
-print( sess.run(accuracy, feed_dict={x:mnist.test.images, y_:mnist.test.labels}) )

@@ -10,7 +10,9 @@ import webscrapy.cache.cache as gc
 from webscrapy.items import XiuxiuCrapyItem
 import logging
 from webscrapy.spiders.xiuxiu_moive_sprider import XiuxiuMoiveSprider
-
+from  webscrapy.spiders.rong360_sprider import Rong_360_Sprider
+from webscrapy.common import common
+from webscrapy.items import Rong360CrapyItem
 EXCEL_PATH = './webscrapy/resource/csv/'
 FIRST = 1
 
@@ -43,7 +45,7 @@ class CsvPipeline(object):
         img_url = kw['image_url']
         try:
             response = requests.get(img_url)
-            with open('./webscrapy/resource/img/'+kw['title']+'.jpg','wb') as f:
+            with open('./webscrapy/resource/img/'+str(kw['card_index'])+'_'+kw['card_nm']+'.jpg','wb') as f:
                 f.write(response.content)
                 f.close()
         except RequestException as e:
@@ -66,4 +68,30 @@ class XiuxiuMoivePipline(object):
                 except Exception as e :
                     logging.error(e)
                     pass
-
+        return item
+class Rong360Pipline(object):
+    def process_item(self,item,spider):
+        if isinstance(spider,Rong_360_Sprider):
+            if isinstance(item,Rong360CrapyItem):
+                detail_dic = self.do_page_by_url(**item)
+                if 'privilege' not in detail_dic:
+                    detail_dic['privilege'] = ''
+                global FIRST
+                try:
+                    if FIRST == 1 and os.path.exists(EXCEL_PATH + 'credit_card.csv'):
+                        FIRST+=1
+                        os.remove(EXCEL_PATH + 'credit_card.csv')
+                    with open(EXCEL_PATH+'credit_card.csv','a',newline='',encoding='utf-8') as file:
+                        write = csv.writer(file)
+                        write.writerow([item['card_index'],item['card_nm'],item['title'],item['image_url'],item['card_level'],item['card_currency'],item['cash_out_fee'],item['annual_fee_policy'],item['card_detail_url']
+                                        ,detail_dic['base_inf'],detail_dic['privilege'],detail_dic['related_const']])
+                except Exception as e :
+                    logging.error(e)
+                    pass
+                cp = CsvPipeline()
+                cp.download_img(**item)
+    def do_page_by_url(self,**kw):
+        url = kw['card_detail_url']
+        html = common.get_one_page(url)
+        if html != None:
+            return common.parse_page(html,**kw)

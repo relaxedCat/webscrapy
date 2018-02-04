@@ -26,3 +26,21 @@ class XiuxiuCrapyItem(scrapy.Item):
     time = scrapy.Field()
     comment = scrapy.Field()
     votes = scrapy.Field()
+class Rong360CrapyItem(scrapy.Item):
+    card_index = scrapy.Field()
+    card_nm = scrapy.Field()
+    title = scrapy.Field()
+    image_url = scrapy.Field()
+    card_level = scrapy.Field()
+    card_currency = scrapy.Field()
+    cash_out_fee = scrapy.Field()
+    annual_fee_policy = scrapy.Field()
+    card_detail_url = scrapy.Field()
+    base_inf = ''
+    privilege = ''
+    related_const = ''
+
+class CardDetailInfCrapyItem(scrapy.Item):
+    base_inf = scrapy.Field()
+    privilege = scrapy.Field()
+    related_const = scrapy.Field()

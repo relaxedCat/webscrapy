@@ -69,6 +69,7 @@ ITEM_PIPELINES = {
    'webscrapy.pipelines.RedisPipeline': 1,
    'webscrapy.pipelines.CsvPipeline': 2,
    'webscrapy.pipelines.XiuxiuMoivePipline': 3,
+   'webscrapy.pipelines.Rong360Pipline': 4,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
