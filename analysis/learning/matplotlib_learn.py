@@ -77,11 +77,13 @@ def plotscatter():
 def plotbar():
     n = 12
     X = np.arange(n)
+    print(X)
     Y = np.arange(12)
+    print(Y)
     plt.bar(X,Y,facecolor='#ff9999', edgecolor='white')
     for x,y in zip(X,Y):
         plt.text(x,y,'%0.2f'%y,ha='center', va='bottom')
     plt.show()
 if __name__ == '__main__':
-    plotscatter()
+    # plotscatter()
     plotbar()
