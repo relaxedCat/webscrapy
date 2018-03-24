@@ -6,6 +6,9 @@ import numpy
 import tensorflow as tf
 from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
 import meachinelearning.mnist.constants as const
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 mnist = read_data_sets("MNIST_data/", one_hot=True)
 
 x = tf.placeholder(tf.float32,[None, 784]) #图像输入向量

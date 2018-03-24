@@ -5,6 +5,8 @@ import time
 from bs4 import BeautifulSoup
 from webscrapy.items import Rong360CrapyItem
 from webscrapy.items import CardDetailInfCrapyItem
+import requests
+
 INDEX= 0
 CURRENT_PAGE = 1
 class Rong_360_Sprider(scrapy.Spider):
@@ -66,3 +68,6 @@ class Rong_360_Sprider(scrapy.Spider):
                 pass
         except Exception as e:
             logging.error(e.__traceback__)
+
+
+
