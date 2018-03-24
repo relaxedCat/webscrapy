@@ -14,15 +14,17 @@ y = Weights*x_data + biases
 
 loss = tf.reduce_mean(tf.square(y - y_data))
 
-optimizer = tf.train.GradientDescentOptimizer(0.4)
+optimizer = tf.train.GradientDescentOptimizer(0.45)
 train = optimizer.minimize(loss)
 
 init = tf.global_variables_initializer()
-
+saver = tf.train.Saver()
 with tf.Session() as sess:
     sess.run(init)
     for step in range(201):
         sess.run(train)
         if step % 20 == 0:
             print(step,sess.run(Weights),sess.run(biases))
+    saver.save(sess,'./model/model.ckpt')
+    print('model saved!!')
 

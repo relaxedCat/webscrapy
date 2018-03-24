@@ -93,3 +93,40 @@ print(df4.dropna(axis=0,how='any'))#0:对行操作，1：对列操作；any:只�
 print(df4.fillna(value=0)) #对所有的NaN的值进行替换为0
 print(df4.isnull()) #判断是否有缺失值
 print(np.any(df4.isnull()) == True) # 检测是否有缺失值，若存在即返回
+
+print('=======================合并操作=========================')
+df5 = pd.DataFrame(np.ones((3,4)) * 0,columns=['a','b','c','d'])
+df6 = pd.DataFrame(np.ones((3,4)) * 1,columns=['a','b','c','d'])
+df7 = pd.DataFrame(np.ones((3,4)) * 2,columns=['a','b','c','d'])
+res = pd.concat([df5,df6,df7],axis=0,ignore_index=True)
+res1 = pd.concat([df5,df6,df7],axis=1)
+print(res)
+print(res1)
+df8 = pd.DataFrame(np.ones((3,4))*0, columns=['a','b','c','d'], index=[1,2,3])
+df9 = pd.DataFrame(np.ones((3,4))*1, columns=['b','c','d','e'], index=[2,3,4])
+res3 = pd.concat([df8,df9],axis=0,join='outer')
+print(res3)
+
+df10 = pd.DataFrame(np.ones((3,4))*0, columns=['a','b','c','d'])
+s1 = pd.Series([1,2,3,4],index=['a','b','c','d'])
+res4 = df10.append([s1],ignore_index=True)
+print(res4)
+
+# data = pd.Series(np.random.randn(1000),index=np.arange(1000))
+# print(type(data))
+# #累加
+# data = data.cumsum()
+# data.plot()
+# plt.show()
+
+dataframe = pd.DataFrame(
+    np.random.randn(1000,4),
+    index=np.arange(1000),
+    columns=list('ABCD')
+)
+# dataframe = dataframe.cumsum()
+# dataframe.plot()
+# plt.show()
+ax = dataframe.plot.scatter(x='A',y='B',color='DarkBlue',label='Class1')
+dataframe.plot.scatter(x='B',y='C',color='LightGreen',label='Class2',ax=ax)
+plt.show()
