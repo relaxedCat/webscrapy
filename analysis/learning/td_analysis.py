@@ -32,14 +32,16 @@ merge_df = pd.DataFrame(li)
 # sort、rest_index
 sort_df = merge_df.sort_values(by='grades', axis=0, ascending=False).reset_index()
 # select data
-n = 24
+n = 29
 real_data = sort_df.ix[:n]
 print(real_data)
 plt.figure(figsize=(16, 10))
 plt.xlabel('X：前'+str(n+1)+'姓名')
 plt.ylabel('Y:忙碌值')
 plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.bar(real_data['name'], real_data['grades'], facecolor='yellow', edgecolor='#B4EEB4')
-for x, y in zip(real_data['name'], real_data['grades']):
+width = 0.25
+plt.xticks(np.arange(len(real_data['name']),0,-1), real_data['name'])
+plt.bar(np.arange(len(real_data['name']),0,-1), real_data['grades'], width,facecolor='yellow', edgecolor='#B4EEB4')
+for x, y in zip(np.arange(len(real_data['name']),0,-1), real_data['grades']):
         plt.text(x, y,'%0.2f'%y, ha='center', va='bottom')
 plt.show()
